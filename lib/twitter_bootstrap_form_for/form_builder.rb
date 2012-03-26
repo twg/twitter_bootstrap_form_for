@@ -40,7 +40,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   #
   def toggles(label = nil, &block)
     template.content_tag(:div, :class => 'control-group') do
-      template.concat template.content_tag(:label, label)
+      template.concat template.content_tag(:label, label, :class => 'control-label')
       template.concat template.content_tag(:div, :class => "input") {
         template.content_tag(:ul, :class => "inputs-list") { block.call }
       }
@@ -70,7 +70,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   #
   def inline(label = nil, &block)
     template.content_tag(:div, :class => 'control-group') do
-      template.concat template.content_tag(:label, label) if label.present?
+      template.concat template.content_tag(:label, label, :class => 'control-label') if label.present?
       template.concat template.content_tag(:div, :class => 'input') {
         template.content_tag(:div, :class => 'inline-inputs') do
           template.fields_for(
@@ -92,7 +92,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
       classes << ('input-' + options.delete(:add_on).to_s) if options[:add_on]
 
       self.div_wrapper(attribute) do
-        template.concat self.label(attribute, label) if label
+        template.concat self.label(attribute, label, :class => 'control-label') if label
         template.concat template.content_tag(:div, :class => classes.join(' ')) {
           template.concat super(attribute, *(args << options))
           template.concat error_span(attribute)
@@ -106,7 +106,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
     define_method toggle do |attribute, *args, &block|
       label       = args.first.nil? ? '' : args.shift
       target      = self.object_name.to_s + '_' + attribute.to_s
-      label_attrs = toggle == :check_box ? { :for => target } : {}
+      label_attrs = toggle == :check_box ? { :for => target, :class => 'control-label' } : {}
 
       template.content_tag(:li) do
         template.concat template.content_tag(:label, label_attrs) {
