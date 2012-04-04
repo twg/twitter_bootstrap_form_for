@@ -41,7 +41,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   def toggles(label = nil, &block)
     template.content_tag(:div, :class => 'control-group') do
       template.concat template.content_tag(:label, label, :class => 'control-label')
-      template.concat template.content_tag(:div, :class => "input") {
+      template.concat template.content_tag(:div, :class => "controls") {
         template.content_tag(:ul, :class => "inputs-list") { block.call }
       }
     end
@@ -59,7 +59,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   # button.
   #
   def submit(value = nil, options = {})
-    options[:class] ||= 'btn primary'
+    options[:class] ||= 'btn btn-primary'
 
     super value, options
   end
@@ -71,7 +71,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   def inline(label = nil, &block)
     template.content_tag(:div, :class => 'control-group') do
       template.concat template.content_tag(:label, label, :class => 'control-label') if label.present?
-      template.concat template.content_tag(:div, :class => 'input') {
+      template.concat template.content_tag(:div, :class => 'controls') {
         template.content_tag(:div, :class => 'inline-inputs') do
           template.fields_for(
             self.object_name,
@@ -88,7 +88,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
     define_method input do |attribute, *args, &block|
       options  = args.extract_options!
       label    = args.first.nil? ? '' : args.shift
-      classes  = [ 'input' ]
+      classes  = [ 'controls' ]
       classes << ('input-' + options.delete(:add_on).to_s) if options[:add_on]
 
       self.div_wrapper(attribute) do
